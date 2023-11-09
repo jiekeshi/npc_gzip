@@ -76,14 +76,16 @@ if __name__ == '__main__':
     train_idx_fn = os.path.join(args.output_dir, '{}_train_indicies_{}per_class'.format(args.dataset, args.num_train))
     test_idx_fn = os.path.join(args.output_dir, '{}_test_indicies_{}per_class'.format(args.dataset, args.num_test))
     # all dataset class number
-    ds2classes = {'AG_NEWS': 4, 'SogouNews': 5, 'DBpedia': 14, 'YahooAnswers': 10,
+    ds2classes = {'Devign':2, 'AG_NEWS': 4, 'SogouNews': 5, 'DBpedia': 14, 'YahooAnswers': 10,
                   '20News': 20, 'Ohsumed': 23, 'Ohsumed_single': 23, 'R8': 8, 'R52': 52,
                   'kinnews': 14, 'swahili': 6, 'filipino': 5,  'kirnews': 14}
     # load dataset
     data_dir = os.path.join(args.data_dir, args.dataset)
-    if args.dataset not in ['20News', 'Ohsumed', 'Ohsumed_single', 'R8', 'R52','kinnews', 'swahili', 'filipino', 'kirnews']:
+    if args.dataset not in ['Devign', '20News', 'Ohsumed', 'Ohsumed_single', 'R8', 'R52','kinnews', 'swahili', 'filipino', 'kirnews']:
         dataset_pair = eval(args.dataset)(root=args.data_dir)
     else:
+        if args.dataset == 'Devign':
+            dataset_pair = load_devign(args.data_dir)
         if args.dataset == '20News':
             dataset_pair = load_20news()
         elif args.dataset == 'Ohsumed':

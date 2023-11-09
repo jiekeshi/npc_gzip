@@ -96,6 +96,23 @@ def load_ohsumed(di, split=0.9):
                     test_ds.append((label, text))
     return train_ds, test_ds
 
+import json
+def load_devign(di):
+    def process(d):
+        ds = []
+        with open(d) as f:
+            ds = [json.loads(line) for line in f.readlines()]
+        dss = []
+        for pair in ds:
+            label = pair['target']
+            text = pair['func']
+            dss.append((label, text))
+        return dss
+    train_dir = os.path.join(di, 'train.jsonl')
+    test_dir = os.path.join(di, 'test.jsonl')
+    train_ds, test_ds = process(train_dir), process(test_dir)
+    return train_ds, test_ds
+
 def load_r8(di, delimiter='\t'):
     def process(fn):
         l = []
